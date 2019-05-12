@@ -1,6 +1,3 @@
-#coding: utf-8
-#!/usr/bin/python3
-
 import requests
 
 class darksearchException(Exception):
@@ -21,7 +18,6 @@ class darksearch:
 
 			if r.status_code != 429:
 				if max_page:
-					del(url)
 					dw_data = []
 
 					for p in range(page, max_page + 1):
@@ -32,7 +28,7 @@ class darksearch:
 
 						dw_data.append(r.text)
 	
-					return dw_data #as a list
+					return dw_data
 				else:
 					return r.text
 					break
