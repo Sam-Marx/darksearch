@@ -1,4 +1,4 @@
-## Unofficial darksearch api lib
+## Unofficial darksearch.io api lib
 
 ```python
 from DarkSearch.darksearch import darksearch
