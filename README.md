@@ -51,3 +51,4 @@ for i in darksearch.search('sam', 1, max_page=2):
             print('Description: ' + data['description'])
             print('Page: ' + str(darksearch_json['current_page']))
 ```
+Return formatted results from multiple pages.
