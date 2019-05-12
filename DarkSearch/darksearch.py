@@ -1,10 +1,13 @@
+#coding: utf-8
+#!/usr/bin/python3
+
 import requests
 
 class darksearchException(Exception):
 	pass
 
 class darksearch:
-	def search(query, page, max_page=None):
+	def search(query, page, max_page=None, headers=None, proxy=None):
 		search_base = 'https://darksearch.io/api/search?query={}&page={}'
 		max_attempts = 30
 		attempts = 0
@@ -12,8 +15,13 @@ class darksearch:
 		url = search_base.format(query, page)
 
 		while attempts < max_attempts:
-			r = requests.get(url)
+			r = requests.get(url, proxies=proxy)
 
+			if headers:
+				r = requests.get(url, headers=headers)
+			if proxy:
+				r = requests.get(url, proxies=proxy)
+			
 			attempts = attempts + 1
 
 			if r.status_code != 429:
