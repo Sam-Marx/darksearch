@@ -43,7 +43,7 @@ Return formatted results.
 from DarkSearch.darksearch import darksearch
 import json
 
-for i in darksearch.search('sam', 1, max_page=2):
+for i in darksearch.search(query='hacking', page=1, max_page=2):
     darksearch_json = json.loads(i)
         for data in darksearch_json['data']:
             print('Title: ' + data['title'])
@@ -51,4 +51,4 @@ for i in darksearch.search('sam', 1, max_page=2):
             print('Description: ' + data['description'])
             print('Page: ' + str(darksearch_json['current_page']))
 ```
-Return formatted results from multiple pages.
+Return formatted results from multiple pages (page one to page 2).
