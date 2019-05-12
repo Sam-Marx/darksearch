@@ -7,7 +7,7 @@ class darksearchException(Exception):
 	pass
 
 class darksearch:
-	def search(query, page):
+	def search(query, page, max_page=None):
 		search_base = 'https://darksearch.io/api/search?query={}&page={}'
 		max_attempts = 30
 		attempts = 0
@@ -20,8 +20,22 @@ class darksearch:
 			attempts = attempts + 1
 
 			if r.status_code != 429:
-				return r.text
+				if max_page:
+					del(url)
+					dw_data = []
+
+					for p in range(page, max_page + 1):
+						attempts = attempts + 1
+
+						url = search_base.format(query, p)
+						r = requests.get(url)
+
+						dw_data.append(r.text)
+	
+					return dw_data #as a list
+				else:
+					return r.text
+					break
 				break
 
 			raise darksearchException('Error: too many requests. API is limited to 30 queries per minute.')
-			#didnt tested the exception
