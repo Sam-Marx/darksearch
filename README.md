@@ -3,7 +3,7 @@
 ```python
 from DarkSearch.darksearch import darksearch
 
-print(darksearch.search(query='brazil', page='1'))
+print(darksearch.search(query='brazil', page=1))
 ```
 Return not formatted results
 
