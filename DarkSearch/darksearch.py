@@ -24,3 +24,4 @@ class darksearch:
 				break
 
 			raise darksearchException('Error: too many requests. API is limited to 30 queries per minute.')
+			#didnt tested the exception
