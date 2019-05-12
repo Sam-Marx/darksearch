@@ -1,12 +1,22 @@
 ## Unofficial darksearch.io api lib
 
+### Returning one page
 ```python
 from DarkSearch.darksearch import darksearch
 
 print(darksearch.search(query='brazil', page=1))
 ```
-Return not formatted results
+Return not formatted results.
 
+### Returning multiple pages
+```python
+from DarkSearch.darksearch import darksearch
+
+print(darksearch.search(query='brazil', page=1, max_page=3))
+```
+Return from page one (1) to three (3), not formatted results, as a list.
+
+### Using json to parse one page
 ```python
 from DarkSearch.darksearch import darksearch
 import json
@@ -22,8 +32,22 @@ _to_ = darksearch_json['to'] #return to page / int
 
 #parse data
 for data in darksearch_json['data']:
-  print('title: ' + data['title']) # print all onion website titles
-  print('link: ' + data['link']) # print all onion website links
-  print('description: ' + data['description']) # print all onion website descriptions
+    print('Title: ' + data['title']) # print all onion website titles
+    print('Link: ' + data['link']) # print all onion website links
+    print('Description: ' + data['description']) # print all onion website descriptions
 ```
-Return formatted results
+Return formatted results.
+
+### Using json to parse multiple pages
+```python
+from DarkSearch.darksearch import darksearch
+import json
+
+for i in darksearch.search('sam', 1, max_page=2):
+    darksearch_json = json.loads(i)
+        for data in darksearch_json['data']:
+            print('Title: ' + data['title'])
+            print('Link: ' + data['link'])
+            print('Description: ' + data['description'])
+            print('Page: ' + str(darksearch_json['current_page']))
+```
