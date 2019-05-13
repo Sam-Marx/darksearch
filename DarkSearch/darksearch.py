@@ -13,6 +13,9 @@ class DarksearchManyRequestsException(Exception):
 class DarksearchMaxPageLimitException(Exception):
 	pass
 
+class DarksearchRequestTimeoutException(Exception):
+	pass
+
 class darksearch:
 	def search(query, page, max_page=None, headers=None, proxy=None):
 		search_base = 'https://darksearch.io/api/search?query={}&page={}'
@@ -22,12 +25,15 @@ class darksearch:
 		url = search_base.format(query, page)
 
 		while attempts < max_attempts:
-			r = requests.get(url, proxies=proxy)
+			try:
+				r = requests.get(url, timeout=15)
 
-			if headers:
-				r = requests.get(url, headers=headers)
-			if proxy:
-				r = requests.get(url, proxies=proxy)
+				if headers:
+					r = requests.get(url, headers=headers, timeout=15)
+				if proxy:
+					r = requests.get(url, proxies=proxy, timeout=15)
+			except requests.exceptions.RequestException:
+				raise DarksearchRequestTimeoutException
 			
 			attempts = attempts + 1
 
