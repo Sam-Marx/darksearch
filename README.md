@@ -25,7 +25,7 @@ Return from page one (1) to three (3), not formatted results, as a list.
 from DarkSearch.darksearch import darksearch
 import json
 
-darksearch_json = json.loads(darksearch.search('darksearch', 1, headers=None, proxy=None))
+darksearch_json = json.loads(darksearch.search(query='darksearch', page=1, headers=None, proxy=None))
 
 total_results = darksearch_json['total'] #return number of total results / int
 results_per_page = darksearch_json['per_page'] #return results per page / int
