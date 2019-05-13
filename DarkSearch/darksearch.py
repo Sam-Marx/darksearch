@@ -33,8 +33,8 @@ class darksearch:
 				if proxy:
 					r = requests.get(url, proxies=proxy, timeout=15)
 			except requests.exceptions.RequestException:
-				raise DarksearchRequestTimeoutException
-			
+				raise DarksearchRequestTimeoutException('Error: 504 Gateway Time-out.')
+
 			attempts = attempts + 1
 
 			if r.status_code != 429:
