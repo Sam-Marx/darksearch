@@ -4,7 +4,13 @@
 import requests
 import re
 
-class darksearchException(Exception):
+class DarksearchException(Exception):
+	pass
+
+class DarksearchManyRequestsException(Exception):
+	pass
+
+class DarksearchMaxPageLimitException(Exception):
 	pass
 
 class darksearch:
@@ -28,11 +34,11 @@ class darksearch:
 			if r.status_code != 429:
 				if max_page:
 					dw_data = []
-					last_page_re = re.findall('"last_page":[0-9]+', r.text) #get last_page without json
-					last_page_re = re.findall(r'\d+', str(last_page_re)) #get number of last_page
+					last_page_re = re.findall('"last_page":[0-9]+', r.text)
+					last_page_re = re.findall(r'\d+', str(last_page_re))
 
 					if int(max_page) > int(last_page_re[-1]):
-						raise darksearchException('Error: the max page could not be reached, because the last page is less than the max page.')
+						raise DarksearchMaxPageLimitException('Error: the max page could not be reached, because the last page is less than the max page.')
 						break
 
 					for p in range(page, max_page + 1):
@@ -49,4 +55,4 @@ class darksearch:
 					break
 				break
 
-			raise darksearchException('Error: too many requests. API is limited to 30 queries per minute.')
+			raise DarksearchManyRequestsException('Error: too many requests. API is limited to 30 queries per minute.')
