@@ -16,6 +16,9 @@ class DarksearchMaxPageLimitException(Exception):
 class DarksearchRequestTimeoutException(Exception):
 	pass
 
+class DarksearchGatewayTimeoutException(Exception):
+	pass
+
 class DarksearchNoResultsException(Exception):
 	pass
 
@@ -35,8 +38,11 @@ class darksearch:
 					r = requests.get(url, headers=headers, timeout=15)
 				if proxy:
 					r = requests.get(url, proxies=proxy, timeout=15)
+
+				if r.status_code == 504:
+					raise DarksearchGatewayTimeoutException('Error: 504 Gateway Time-out.')
 			except requests.exceptions.RequestException:
-				raise DarksearchRequestTimeoutException('Error: 504 Gateway Time-out.')
+				raise DarksearchRequestTimeoutException('Error: requests time-out.')
 			except ValueError:
 				raise DarksearchNoResultsException('Error: without results.')
 
