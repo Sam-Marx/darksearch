@@ -49,10 +49,10 @@ import json
 
 for i in darksearch.search(query='hacking', page=1, max_page=2, headers=None, proxy=None):
     darksearch_json = json.loads(i)
-        for data in darksearch_json['data']:
-            print('Title: ' + data['title'])
-            print('Link: ' + data['link'])
-            print('Description: ' + data['description'])
-            print('Page: ' + str(darksearch_json['current_page']))
+    for data in darksearch_json['data']:
+	print('Title: ' + data['title'])
+        print('Link: ' + data['link'])
+        print('Description: ' + data['description'])
+        print('Page: ' + str(darksearch_json['current_page']))
 ```
 Return formatted results from multiple pages (page one to page 2).
