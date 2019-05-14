@@ -16,6 +16,9 @@ class DarksearchMaxPageLimitException(Exception):
 class DarksearchRequestTimeoutException(Exception):
 	pass
 
+class DarksearchNoResultsException(Exception):
+	pass
+
 class darksearch:
 	def search(query, page, max_page=None, headers=None, proxy=None):
 		search_base = 'https://darksearch.io/api/search?query={}&page={}'
@@ -34,6 +37,8 @@ class darksearch:
 					r = requests.get(url, proxies=proxy, timeout=15)
 			except requests.exceptions.RequestException:
 				raise DarksearchRequestTimeoutException('Error: 504 Gateway Time-out.')
+			except ValueError:
+				raise DarksearchNoResultsException('Error: without results.')
 
 			attempts = attempts + 1
 
